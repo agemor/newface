@@ -1,8 +1,14 @@
+<?php
+include 'dbconfig.php';
+include 'write.php';
+$id = $_GET["id"];
+?>
+
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Hello, world!</title>
+    <title>NewFACE</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -26,11 +32,12 @@
 
 
         <div class="card p-3 mt-5">
-            <form action="./write.php" method="POST">
+            <form action="./index.php" method="POST">
                 <fieldset>
                     <div class="form-group">
                         <label for="exampleTextarea">
-                            <strong>ㅎㅈ331</strong>님의 말:</label>
+                            <!--id 전달방식??-->
+                            <strong><?php echo $id; ?></strong>님의 말:</label>
                         <textarea class="form-control" name="content" id="exampleTextarea" rows="3" placeholder="하고 싶은 이야기"></textarea>
                     </div>
                     <div class="row">
@@ -41,9 +48,9 @@
                         </div>
                         <div class="col-6">
                             <button type="submit" class="btn btn-primary float-right">올리기</button>
-
                         </div>
                     </div>
+                    <input type="hidden" name="id" value="<?php echo $id; ?>">
                 </fieldset>
             </form>
         </div>
@@ -81,18 +88,6 @@
                             <a href="#">댓글 쓰기</a>)
                         </div>
                     </div>
-                    <div class="media mt-3">
-                        <a class="pr-4" href="#">
-                        </a>
-                        <div class="media-body">
-                            <h6 class="mt-0 ">
-                                <span class="badge badge-primary">New</span>
-                                <a href="#">ㅇㅁ11</a>
-                                <span class="text-muted">(11. 09. 13:10)</span>:</h6>
-                            <strong>@ㅊㅁ711</strong> 정말 그런곳이 있음? (
-                            <a href="#">댓글 쓰기</a>)
-                        </div>
-                    </div>
                 </div>
             </div>
             <hr/>
@@ -106,15 +101,41 @@
                 </div>
             </div>
             <hr/>
-            <div class="media mt-0">
-                <div class="media-body">
-                    <h6 class="mt-0 text-muted">
-                        <a href="#">ㅊㅇ113</a>
-                        <span class="text-muted">(11. 09. 08:30)</span>:</h6>
-                    안녕하세요! (
-                    <a href="#">댓글 쓰기</a>)
+            <?php
+            $query = "SELECT * FROM postings ORDER BY timestamp DESC";
+            $reply = mysql_query($query);
+            $num_replies = mysql_num_rows($reply);
+            // 몇번째 페이지인지 고려해서 인덱스 수정해야할 듯
+            for($i=0;$i < $numb; $i++)
+            {
+                $row = mysql_fetch_assoc($reply);
+            ?>
+                <div class="media mt-0">
+                    <div class="media-body">
+                        <!-- 본문 -->
+                        <h6 class="mt-0 text-muted">
+                            <a href="#"><?php echo $row["id"] ?></a>
+                            <span class="text-muted"><?php echo $row["timestamp"]; ?></span>:</h6>
+                        <?php echo $row["content"]; ?>
+                        (<a href="#">댓글 쓰기</a>)
+
+                        <!-- 댓글(???) -->
+                        <div class="media mt-3">
+                        <a class="pr-4" href="#">
+                        </a>
+                        <div class="media-body">
+                            <h6 class="mt-0 ">
+                                <a href="#">ㅎㅈ331</a>
+                                <span class="text-muted">(11. 09. 12:03)</span>:</h6>
+                            그냥 세제랑 섬유유연제 가져오셔서 빨래하면 돼요. (
+                            <a href="#">댓글 쓰기</a>)
+                        </div>
+                    </div>
+                    </div>
                 </div>
-            </div>
+            <?php
+            }
+            ?>
         </div>
 
         <nav class="mt-5">

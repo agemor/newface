@@ -1,24 +1,35 @@
 <?php
-// 쓰여진 글 정보 저장 후 index.php로 redirect
+include 'dbconfig.php';
 
-if (!$link = mysql_connect('db.helloyonsei.com', 'yontem', 'yontemadmin18!')) {
-    echo 'Could not connect to mysql';
-    exit;
-}
+$posting = array(
+    'id'      => "",
+    'content' => ""
+);
 
-if (!mysql_select_db('dbnewface', $link)) { //dbnewface로 만들 예정
-    echo 'Could not select database';
-    exit;
-}
-
-mysql_query("set session character_set_connection=utf8;");
-mysql_query("set session character_set_results=utf8;");
-mysql_query("set session character_set_client=utf8;");
-
-$content = $_POST["content"];
+$posting['id'] = $_POST["id"];
+$posting['content'] = $_POST["content"];
 
 // DB에 저장
 
-// 다시 메인페이지로
-header( 'Location: http://newface.com/index.php' ); // 주소 다를 수 있음
+$query = sprintf("INSERT INTO postings (content, writer) VALUES ('%s', '%s')",
+                $posting['id'], $posting['content']
+                );
+$reply = mysql_query($query);
+if($reply)
+{
+    ?>
+    <script>
+    alert("업로드가 완료되었습니다.");
+    </script>
+    <?php
+}
+else
+{
+    ?>
+    <script>
+        alert("업로드에 실패하였습니다.");
+    </script>
+    <?php
+}
+
 ?>
