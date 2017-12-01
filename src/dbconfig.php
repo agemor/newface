@@ -5,7 +5,7 @@ if (!$link = mysql_connect('db.helloyonsei.com', 'yontem', 'yontemadmin18!')) {
     exit;
 }
 
-if (!mysql_select_db('dbnewface', $link)) { //dbnewface로 만들 예정
+if (!mysql_select_db('dbyontem', $link)) {
     echo 'Could not select database';
     exit;
 }

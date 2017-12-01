@@ -36,8 +36,8 @@ $id = $_GET["id"];
                 <fieldset>
                     <div class="form-group">
                         <label for="exampleTextarea">
-                            <!--id 전달방식??-->
-                            <strong><?php echo $id; ?></strong>님의 말:</label>
+                            <strong><?php echo $id; ?></strong>님의 말:
+                        </label>
                         <textarea class="form-control" name="content" id="exampleTextarea" rows="3" placeholder="하고 싶은 이야기"></textarea>
                     </div>
                     <div class="row">
@@ -102,11 +102,13 @@ $id = $_GET["id"];
             </div>
             <hr/>
             <?php
-            $query = "SELECT * FROM postings ORDER BY timestamp DESC";
+            // subject == -1 은 댓글이 아닌 글을 의미함
+            $query = "SELECT * FROM postings WHERE subject=-1 ORDER BY timestamp DESC";
             $reply = mysql_query($query);
             $num_replies = mysql_num_rows($reply);
+
             // 몇번째 페이지인지 고려해서 인덱스 수정해야할 듯
-            for($i=0;$i < $numb; $i++)
+            for($i=0;$i < $num_replies; $i++)
             {
                 $row = mysql_fetch_assoc($reply);
             ?>
@@ -114,23 +116,38 @@ $id = $_GET["id"];
                     <div class="media-body">
                         <!-- 본문 -->
                         <h6 class="mt-0 text-muted">
-                            <a href="#"><?php echo $row["id"] ?></a>
-                            <span class="text-muted"><?php echo $row["timestamp"]; ?></span>:</h6>
+                            <a href="#"><?php echo $row["writer"]; ?></a>
+                            <span class="text-muted"><?php echo $row["timestamp"]; ?></span>:
+                        </h6>
                         <?php echo $row["content"]; ?>
                         (<a href="#">댓글 쓰기</a>)
 
-                        <!-- 댓글(???) -->
-                        <div class="media mt-3">
-                        <a class="pr-4" href="#">
-                        </a>
-                        <div class="media-body">
-                            <h6 class="mt-0 ">
-                                <a href="#">ㅎㅈ331</a>
-                                <span class="text-muted">(11. 09. 12:03)</span>:</h6>
-                            그냥 세제랑 섬유유연제 가져오셔서 빨래하면 돼요. (
-                            <a href="#">댓글 쓰기</a>)
-                        </div>
-                    </div>
+                        <!-- 댓글 -->
+                        <?php
+                        // subject == num(본문) 인 글 들고와서 출력
+                        $query = "SELECT * FROM postings WHERE subject=".$row["num"]." ORDER BY timestamp";
+                        $comments = mysql_query($query);
+                        $num_comments = mysql_num_rows($comments);
+
+                        for($j=0;$j<$num_comments;$j++)
+                        {
+                            $row_comment = mysql_fetch_assoc($comments);
+                        ?>
+                            <div class="media mt-3">
+                                <a class="pr-4" href="#">
+                                </a>
+                                <div class="media-body">
+                                    <h6 class="mt-0 ">
+                                        <a href="#"><?php echo $row_comment["writer"];?></a>
+                                        <span class="text-muted"><?php echo $row_comment["timestamp"];?></span>:
+                                    </h6>
+                                    <?php echo $row_comment["content"]; ?>
+                                    <a href="#">댓글 쓰기</a>)
+                                </div>
+                            </div>
+                        <?php
+                        }
+                        ?>
                     </div>
                 </div>
             <?php

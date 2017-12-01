@@ -7,7 +7,8 @@ Anonymous SNS for closed group
 * 글 내용 -> content
 * 작성 시각 -> timestamp
 * 작성자 -> writer
-* 어떤 글의 댓글인가? -> (?)
+* 댓글태그 -> subject
+* 추천 -> upvote
 ### userlist
 * 번호 -> num
 * id -> id
