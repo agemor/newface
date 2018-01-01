@@ -20,7 +20,7 @@ $id = $_GET["id"];
 <body>
     <nav class="navbar sticky-top navbar-light bg-light ">
         <div class="container">
-            <a class="navbar-brand" href="#">뉴페이스</a>
+            <a class="navbar-brand" href="#"><h1>뉴페이스</h1></a>
             <div class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-outline-primary">자기소개 변경</button>
                 <button type="button" class="btn btn-outline-primary">로그아웃</button>
