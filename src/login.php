@@ -8,31 +8,31 @@
 
     <title>Signin</title>
 
-    <!-- Bootstrap core CSS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ"
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
-    <link href="login.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="login.css">
   </head>
 
   <body>
-
     <div class="container">
+      <?php
+            if(isset($_GET["error"])) { ?>
+            <script>alert("비밀번호가 올바르지 않습니다");</script>
+            <?php }
+      ?>
       <div class="card">
 
-        <form class="form-signin" action="#" method="POST">
+        <form action="./index.php" method="POST">
           <h2 class="form-signin-heading">Login</h2>
-
-          <label for="inputEmail" class="sr-only">Email address</label>
-          <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-          <label for="inputPassword" class="sr-only">Password</label>
-          <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-          
+          <div class="form-group">
+            <label for="id">Email address</label>
+            <input type="email" id="id" class="form-control" placeholder="Email address" required autofocus>
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" class="form-control" placeholder="Password" required>
+          </div>
           <button class="btn btn-outline-primary" type="submit">Sign in</button>
         </form>
       </div>

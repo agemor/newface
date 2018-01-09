@@ -2,6 +2,12 @@
 include 'dbconfig.php';
 include 'write.php';
 $id = $_GET["id"];
+
+if($_POST['password'] !== 'temp')
+{
+    header("Location: ./login.php?error=true");
+    exit();
+}
 ?>
 
 <!doctype html>
